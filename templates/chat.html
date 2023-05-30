@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--Link to CSS -->
+    <link href="../static/bootstrap.min.css" rel="stylesheet" />
+    <link href="../static/newhome.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+        <script type="text/javascript" charset="utf-8">
+            var socket;
+            $(document).ready(function(){
+                socket = io.connect('http://' + document.domain + ':' + location.port + '/chat.html');
+                
+                socket.on('connect', function() {
+                    socket.emit('join', {});
+                });
+                socket.on('connect_error', function (err) {
+                console.log('Connection failed:', err);
+            });
+                socket.on('status', function(data) {
+                    $('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
+                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+                });
+                socket.on('message', function(data) {
+                    $('#chat').val($('#chat').val() + data.msg + '\n');
+                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+                });
+                $('#send').click(function(e) {
+                        text = $('#text').val();
+                        $('#text').val('');
+                        socket.emit('text', {msg: text});
+                });
+            });
+            function leave_room() {
+                socket.emit('left', {}, function() {
+                    socket.disconnect();
+                    // go back to the login page
+                    window.location.href = "home.html";
+                });
+            }
+        </script>
+  </head>
+
+  <body class="text-center">
+    
+    <div class="chatwindow" >
+      <h1 style="color:#3498db;" >Our Live Chat</h1>
+      <h2 style="color:#3498db;">Room : {{session['room']}}</h2><br>
+      <textarea id="chat" cols="70" rows="10" style="border-radius: 5px;" placeholder="No messages yet. Start one..."></textarea><br /><br />
+      <input type="text" id="text" style="border-radius: 5px;" size="60" placeholder="Enter your message here" />
+      <button type="button" id="send"  style="background-color:#3498db !important;"class="btn btn-success">SEND</button><br /><br />
+      <a href="studentprofile.html?username={{ session['username'] }}"><center><button type="button" class="btn btn-danger" >Leave this Chat</button></center></a>
+    </div>
+  </body>
+</html>

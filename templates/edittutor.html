@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Become a student</title>
+  <link rel="stylesheet" href="static/assets/css/signup.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <header>Teach Today!</header>
+    <div class="progress-bar">
+      <div class="step">
+        <p>Name</p>
+        <div class="bullet">
+          <span>1</span>
+        </div>
+        <div class="check fas fa-check"></div>
+      </div>
+      <div class="step">
+        <p>Information</p>
+        <div class="bullet">
+          <span>2</span>
+        </div>
+        <div class="check fas fa-check"></div>
+      </div>
+      <div class="step">
+        <p>Resume</p>
+        <div class="bullet">
+          <span>3</span>
+        </div>
+        <div class="check fas fa-check"></div>
+      </div>
+      <div class="step">
+        <p>Submit</p>
+        <div class="bullet">
+          <span>4</span>
+        </div>
+        <div class="check fas fa-check"></div>
+      </div>
+    </div>
+    <div class="form-outer">
+      <form method="post" enctype="multipart/form-data">
+        <div class="page slide-page">
+          <div class="title">Basic Info:</div>
+          <div class="field">
+            <div class="label">First Name</div>
+            <input type="text" name="fname" value="{{ tutor['fullname'].split()[0] }}">
+          </div>
+          <div class="field">
+            <div class="label">Last Name</div>
+            <input type="text" name="lname" value="{{ tutor['fullname'].split()[1] }}">
+          </div>
+          <div class="field">
+            <div class="label">Password</div>
+            <input type="password" name="password" value="{{ tutor['password'] }}">
+          </div>
+          <div class="field">
+            <div class="label">Age</div>
+            <input type="number" name="age" min="0"  value="{{ tutor['age'] }}">
+          </div>
+          <div class="field">
+            <button class="firstNext next">Next</button>
+          </div>
+        </div>
+
+        <div class="page">
+          <div class="title">User Info:</div>
+          <div class="field">
+            <div class="label">Gender</div>
+            <input type="text" name="gender"value="{{ tutor['gender'] }}">
+          </div>
+          <div class="field">
+            <div class="label">Contact</div>
+            <input type="number" name="contact" min="0" value="{{ tutor['contact'] }}">
+          </div>
+          <div class="field">
+            <div class="label">Languages</div>
+            <select name="languages" multiple>
+                <option value="English" {% if 'English' in tutor['languages'] %}selected{% endif %}>English</option>
+                <option value="Arabic" {% if 'Arabic' in tutor['languages'] %}selected{% endif %}>Arabic</option>
+                <option value="Spanish" {% if 'Spanish' in tutor['languages'] %}selected{% endif %}>Spanish</option>
+                <option value="French" {% if 'French' in tutor['languages'] %}selected{% endif %}>French</option>
+                <option value="German" {% if 'German' in tutor['languages'] %}selected{% endif %}>German</option>
+                <option value="Chinese" {% if 'Chinese' in tutor['languages'] %}selected{% endif %}>Chinese</option>
+              </select>
+          </div>
+          <div class="field">
+            <div class="label">Subjects</div>
+            <select name="interests" multiple>
+            {% for interest in all_interests %}
+                <option value="{{ interest }}" {% if interest in tutor['interests'] %}selected{% endif %}>{{ interest }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <div class="label">Teach a new Subject</div>
+            <p style="color:gray">dance, music, anime</p>
+            <input type="text" name="newinterest">
+          </div>
+          <div class="field btns">
+            <button class="prev-1 prev">Previous</button>
+            <button class="next-1 next">Next</button>
+          </div>
+        </div>
+
+        <div class="page">
+          <div class="title">Teaching:</div>
+          <div class="field">
+            <div class="label">Bio</div>
+            <input type="text" name="bio" value="{{ tutor['bio'] }}">
+          </div>
+          <div class="field">
+            <div class="label">Education</div>
+            <input type="text" name="education" value="{{ tutor['education'] }}">
+          </div>
+          <div class="field">
+            <div class="label">Years of Experience</div>
+            <input type="number" name="yearsofexperience" min="0" value="{{ tutor[' yearsofexperience'] }}">
+          </div>
+          <div class="field">
+            <div class="label">Location</div>
+                <select name="location">
+                    <option value="Akkar" {% if 'Akkar' in tutor['location'] %}selected{% endif %}>Akkar</option>
+                    <option value="Baalbek-Hermel" {% if 'Baalbek-Hermel' in tutor['location'] %}selected{% endif %}>Baalbek-Hermel</option>
+                    <option value="Beirut" {% if 'Beirut' in tutor['location'] %}selected{% endif %}>Beirut</option>
+                    <option value="Beqaa" {% if 'Beqaa' in tutor['location'] %}selected{% endif %}>Beqaa</option>
+                    <option value="Mount Lebanon" {% if 'Mount Lebanon' in tutor['location'] %}selected{% endif %}>Mount Lebanon</option>
+                    <option value="Nabatieh" {% if 'Nabatieh' in tutor['location'] %}selected{% endif %}>Nabatieh</option>
+                    <option value="North Lebanon" {% if 'North Lebanon' in tutor['location'] %}selected{% endif %}>North Lebanon</option>
+                    <option value="South Lebanon" {% if 'South Lebanon' in tutor['location'] %}selected{% endif %}>South Lebanon</option>
+                    <!-- Add more location options here -->
+                  </select>
+          </div>
+          <div class="field">
+            <div class="label">Availability</div>
+            <input type="text" name="availability"value="{{ tutor['availability'] }}">
+          </div>
+          <div class="field btns">
+            <button class="prev-2 prev">Previous</button>
+            <button class="next-2 next">Next</button>
+          </div>
+        </div>
+
+        <div class="page">
+          <div class="title">Resume:</div>
+          <div class="field" style="margin-bottom: 6rem;">
+            <div class="label">Price Range</div>
+              <div class="price-content">
+                <div>
+                  <label>Min</label>
+                  <p id="min-value">{{ tutor['minprice'] }}</p>
+                 <label>Max</label>
+                  <p id="max-value">{{ tutor['maxprice'] }}</p>
+                </div>
+              </div>
+              <div class="range-slider">
+                <input type="range" class="min-price" name="minprice" value="{{ tutor['minprice'] }}" min="0" max="100" step="1">
+                <input type="range" class="max-price" name="maxprice" value="{{ tutor['maxprice'] }}" min="0" max="100" step="1">
+              </div>
+          </div>
+          <script>let minValue = document.getElementById("min-value");
+            let maxValue = document.getElementById("max-value");
+
+            function validateRange(minPrice, maxPrice) {
+              if (minPrice > maxPrice) {
+
+                // Swap to Values
+                let tempValue = maxPrice;
+                maxPrice = minPrice;
+                minPrice = tempValue;
+              }
+
+              minValue.innerHTML = "$" + minPrice;
+              maxValue.innerHTML = "$" + maxPrice;
+            }
+
+            const inputElements = document.querySelectorAll("input[type=range]");
+
+            inputElements.forEach((element) => {
+              element.addEventListener("input", (e) => {
+                let minPrice = parseInt(inputElements[0].value);
+                let maxPrice = parseInt(inputElements[1].value);
+
+                validateRange(minPrice, maxPrice);
+              });
+            });
+
+            validateRange(inputElements[0].value, inputElements[1].value);
+          </script>
+
+          <div class="field" >
+            <div class="label">Delivery Method</div>
+            <select name="deliverymethod" multiple>
+                <option value="Online" {% if 'Online' in tutor['deliverymethod'] %}selected{% endif %}>Online</option>
+                <option value="Hybrid" {% if 'Hybrid' in tutor['deliverymethod'] %}selected{% endif %}>Hybrid</option>
+                <option value="In-Person" {% if 'In-Person' in tutor['deliverymethod'] %}selected{% endif %}>In-Person</option>
+                <!-- Add more delivery method options here -->
+              </select>
+          </div>
+          <div class="field">
+            <label for="image">Pick your profile picture</label>
+            <input type="file" name="image">
+          </div>
+          <div class="field">
+            <label for="image">Upload your CV</label>
+            <input type="file" name="cv">
+          </div>
+          <div class="field" style="margin-bottom: 2rem;">
+            <label for="image">Upload supporting documents</label>
+            <input type="file" name="docs">
+          </div>
+        <div class="field btns">
+          <button class="prev-3 prev">Previous</button>
+          <button type="submit" value="Register Now">Submit</button>
+        </div>
+    </div>
+    </form>
+  </div>
+  </div>
+  <script src="static/assets/js/signup.js"></script>
+
+</body>
+
+</html>
