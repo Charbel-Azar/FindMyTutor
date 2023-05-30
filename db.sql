@@ -1,0 +1,141 @@
+CREATE TABLE USER (
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    picture VARCHAR(255),
+    fullname VARCHAR(255),
+    age INT,
+    gender VARCHAR(10),
+    languages VARCHAR(255),
+    contact VARCHAR(255),
+    PRIMARY KEY (username)
+);
+
+CREATE TABLE TUTOR (
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    picture VARCHAR(255),
+    fullname VARCHAR(255),
+    age INT,
+    gender VARCHAR(10),
+    languages VARCHAR(255),
+    contact VARCHAR(255),
+    bio VARCHAR(255),
+    education VARCHAR(255),
+    yearsofexperience INT,
+    location VARCHAR(255),
+    subjects VARCHAR(255),
+    availability VARCHAR(255),
+    minprice INT,
+    maxprice INT,
+    deliverymethod VARCHAR(255),
+    avgrating FLOAT,
+    cv VARCHAR(255),
+    docs VARCHAR(255),
+    useruser VARCHAR(100),
+    userpass VARCHAR(100),
+    PRIMARY KEY (username),
+    FOREIGN KEY (useruser) REFERENCES USER(username)
+);
+
+CREATE TABLE STUDENT (
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    picture VARCHAR(255),
+    fullname VARCHAR(255),
+    age INT,
+    gender VARCHAR(10),
+    languages VARCHAR(255),
+    contact VARCHAR(255),
+    interests VARCHAR(255),
+    useruser VARCHAR(100),
+    userpass VARCHAR(100),
+    PRIMARY KEY (username),
+    FOREIGN KEY (useruser) REFERENCES USER(username)
+);
+
+CREATE TABLE SESSION (
+    sessionid INT NOT NULL,
+    platform VARCHAR(255),
+    tutfeedback VARCHAR(255),
+    username VARCHAR(100),
+    password VARCHAR(100),
+    rating FLOAT,
+    PRIMARY KEY (sessionid),
+    FOREIGN KEY (username) REFERENCES STUDENT(username)
+);
+
+CREATE TABLE BOOKING (
+    usid VARCHAR(100) NOT NULL,
+    uspass VARCHAR(100) NOT NULL,
+    tutorid VARCHAR(100) NOT NULL,
+    tutpass VARCHAR(100) NOT NULL,
+    sessid INT NOT NULL,
+    platform VARCHAR(255),
+    PRIMARY KEY (usid, tutorid, sessid),
+    FOREIGN KEY (usid) REFERENCES STUDENT(username),
+    FOREIGN KEY (tutorid) REFERENCES TUTOR(username),
+    FOREIGN KEY (sessid) REFERENCES SESSION(sessionid)
+);
+
+CREATE TABLE REVIEW (
+    revid INT NOT NULL auto_increment,
+    review VARCHAR(100) ,
+    tutuser VARCHAR(100) NOT NULL,
+    studuser VARCHAR(100) NOT NULL,
+    coursename VARCHAR(100) NOT NULL,
+    PRIMARY KEY (revid),
+    FOREIGN KEY (tutuser) REFERENCES TUTOR(username),
+    FOREIGN KEY (studuser) REFERENCES STUDENT(username)
+);
+
+CREATE TABLE CHAT (
+   chatid INT,
+    timestamp TIMESTAMP NOT NULL,
+    message VARCHAR(200) NOT NULL,
+    tutuser VARCHAR(100) NOT NULL,
+    studuser VARCHAR(100) NOT NULL,
+    PRIMARY KEY (chatid),
+    FOREIGN KEY (tutuser) REFERENCES TUTOR(username),
+    FOREIGN KEY (studuser) REFERENCES STUDENT(username)
+);
+
+CREATE TABLE LEARNING (
+learningid INT NOT NULL AUTO_INCREMENT,
+studuser VARCHAR(100) NOT NULL,
+tutuser VARCHAR(100) NOT NULL,
+coursename VARCHAR(100) NOT NULL,
+PRIMARY KEY (learningid),
+FOREIGN KEY (studuser) REFERENCES STUDENT(username),
+FOREIGN KEY (tutuser) REFERENCES TUTOR(username)
+);
+
+INSERT INTO LEARNING (studuser,tutuser,coursename)
+VALUES ('rawan@lau.edu', 'dany@lau.edu', 'Data Science'),
+	 ('rawan@lau.edu', 'joe@lau.edu', 'Software Engineering'),
+       ('karim@lau.edu', 'joe@lau.edu', 'Software Engineering'),
+       ('charbel@lau.edu', 'chadi@lau.edu', 'Communication Systems')
+
+INSERT INTO USER (username, password, picture, fullname, age, gender, languages, contact)
+VALUES ('rawan@lau.edu', 'asd', 'rawan.jpg', 'Rawan Oud ', 21, 'Female', 'English', '+1 555-555-5555'),
+       ('karim@lau.edu', 'asd', 'karim.jpg', 'Karim Hamawi', 21, 'Male', 'Arabic ', '+1 555-555-5555'),
+       ('charbel@lau.edu', 'asd', 'charbel.jpg', 'Charbel Azar', 21, 'Male', 'English', '+1 555-555-5555'),
+	 ('joe@lau.edu', 'asd', 'joe.jpg', 'Joe Tekli', 40, 'Male', 'English', '+1 555-555-5555'),
+  	('dany@lau.edu', 'asd', 'dany.jpg', 'Dany Ishak', 36, 'Male', 'French', '+1 555-555-5555'),
+  	('chadi@lau.edu', 'asd', 'chadi.jpg', 'Chadi Abou Rjeily', 52, 'Male', 'English', '+1 555-555-5555'),
+  	('wissam@lau.edu', 'asd', 'wissam.jpg', 'Wissam Fawaz', 49, 'Male', 'English', '+1 555-555-5555')
+
+
+INSERT INTO STUDENT (username, password, picture, fullname, age, gender, languages, contact, interests, useruser, userpass)
+VALUES ('rawan@lau.edu', 'asd', 'rawan.jpg', 'Rawan Oud', 21, 'Female', 'English', '+1 555-555-5555', 'Wireless Communications', 'rawan@lau.edu', 'asd'),
+       ('karim@lau.edu', 'asd', 'karim.jpg', 'Karim Hamawi', 21, 'Male', 'Arabic', '+1 555-555-5555', 'Data Science', 'karim@lau.edu', 'asd'),
+       ('charbel@lau.edu', 'asd', 'charbel.jpg', 'Charbel Azar', 21, 'Male', 'English', '+1 555-555-5555', 'Software Engineering, Computer Science', 'charbel@lau.edu', 'asd')
+
+INSERT INTO TUTOR (username, password, picture, fullname, age, gender, languages, contact, bio, education, yearsofexperience, location, subjects, availability, minprice, maxprice, deliverymethod, avgrating, cv, docs, useruser, userpass)
+VALUES ('joe@lau.edu', 'asd', 'joe.jpg', 'Joe Tekli', 40, 'Male', 'English', '+1 555-555-5555', '
+I am an Associate Professor in the ECE Department, School of Engineering, Lebanese American University (LAU). I hold a PhD in Computer Science from the Univ. of Bourgogne (UB), LE2I CNRS, France (2009), awarded with Highest Honors.', 'PhD in  Computer Science',25, 'Beirut', 'Software Engineering, Computer Science, Database Management', 'Weekdays, Weekends', 50, 80, 'Online', 4, 'joe.pdf', 'joe.docx', 'joe@lau.edu', 'asd'),
+
+('chadi@lau.edu', 'asd', 'chadi.jpg', 'Chadi Abou Rjeilyi', 52, 'Male', 'English', '+1 555-555-5555', 'I am an Associate Professor in the ECE Department, School of Engineering, Lebanese American University (LAU). I hold Ph.D. in Communications from l’Ecole Nationale Superieure des Telecommunications, France, 2006.', 'PhD in Communications',26, 'Nabatieh', 'Communication Systems, Code Construction, Wireless Communications', 'Weekdays, Weekends', 70, 150, 'Hybrid', 4, 'wissam.pdf', 'wissam.docx', 'chadi@lau.edu', 'asd'),
+       
+ ('dany@lau.edu', 'asd', 'dany.jpg', 'Dany Ishak', 36, 'Male', 'French', '+1 555-555-5555', '
+I am an Associate Professor in the ECE Department, School of Engineering, Lebanese American University (LAU). I hold a PhD in Computer Science from the Univ. of Bourgogne (UB), LE2I CNRS, France (2009), awarded with Highest Honors.', 'PhD in  Computer Science',15, 'Mount Lebanon', 'Data Science, Operating System', 'Weekdays, Weekends', 30, 50, ' In-person', 4, 'joe.pdf', 'joe.docx', 'dany@lau.edu', 'asd')
+
