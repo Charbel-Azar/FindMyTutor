@@ -2,7 +2,7 @@
 This repo contains an implementation of an online platform that connects students and tutors!
 
 ## Description 
-This project aims to bridge the gap between students and tutors by providing them with the necessary means of connection. It provides can offer students a wide selection of topics and tutors based on their needs and prefernces.
+This project aims to bridge the gap between students and tutors by providing them with the necessary means of connection. It provides can offer students a wide selection of topics and tutors based on their needs and preferences.
 
 
 ## Features
